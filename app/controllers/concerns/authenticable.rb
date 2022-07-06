@@ -3,7 +3,7 @@ module Authenticable
     return @current_user if @current_user
 
     header = request.headers['Authorization']
-    return nil if header.nil?
+     render json: { error: 'Not authenticated' }, status: 401 and return unless header
 
     decoded = JsonWebToken.decode(header.split(' ').last)
 

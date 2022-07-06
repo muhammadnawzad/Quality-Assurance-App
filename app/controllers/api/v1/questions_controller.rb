@@ -1,6 +1,7 @@
 module Api
   module V1
     class QuestionsController < ApplicationController
+      before_action :current_user
       before_action :set_question, only: %i[ show update destroy ]
 
       # GET /questions
