@@ -18,7 +18,7 @@ module Api
 
       # POST /answers
       def create
-        @answer = Answer.new(answer_params)
+        @answer = current_user.answers.build(answer_params)
 
         if @answer.save
           render json: @answer, status: :created, location: @answer
@@ -49,7 +49,7 @@ module Api
 
         # Only allow a list of trusted parameters through.
         def answer_params
-          params.require(:answer).permit(:content, :user_id, :question_id, :is_chosen_as_best_answer)
+          params.require(:answer).permit(:content, :question_id)
         end
     end
   end
