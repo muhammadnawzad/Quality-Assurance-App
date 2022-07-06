@@ -4,6 +4,7 @@ Rails.application.routes.draw do
       resources :users
       resources :roles
       resources :tokens
+      resources :questions
     end
   end
 end
