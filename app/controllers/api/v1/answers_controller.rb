@@ -6,13 +6,13 @@ module Api
       # GET /answers
       def index
         @answers = Answer.all.accessible_by(current_ability, :list)
-        render json: @answers, class: { Question: SerializableQuestion, User: SerializableUser, Role: SerializableRole, Answer: SerializableAnswer}, include: ['user', 'question']
+        render jsonapi: @answers, class: { Question: SerializableQuestion, User: SerializableUser, Role: SerializableRole, Answer: SerializableAnswer}, include: ['user', 'question']
       end
 
       # GET /answers/1
       def show
         authorize! :read, @answer
-        render json: @answer, class: { Question: SerializableQuestion, User: SerializableUser, Role: SerializableRole, Answer: SerializableAnswer}, include: ['user', 'question']
+        render jsonapi: @answer, class: { Question: SerializableQuestion, User: SerializableUser, Role: SerializableRole, Answer: SerializableAnswer}, include: ['user', 'question']
       end
 
       # POST /answers

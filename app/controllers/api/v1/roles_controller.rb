@@ -13,7 +13,7 @@ module Api
 
       # GET /roles/1
       def show
-        render jsonapi: @role, class: { Question: SerializableQuestion, User: SerializableUser, Role: SerializableRole, Answer: SerializableAnswer}, include: 'user'
+        render jsonapi: @role, class: { User: SerializableUser, Role: SerializableRole }, include: 'user'
       end
 
       # POST /roles
@@ -21,7 +21,7 @@ module Api
         @role = Role.new(role_params)
 
         if @role.save
-          render jsonapi: @role, class: { Question: SerializableQuestion, User: SerializableUser, Role: SerializableRole, Answer: SerializableAnswer}, include: 'user', status: :created, location: @role
+          render jsonapi: @role, class: { User: SerializableUser, Role: SerializableRole }, include: 'user', status: :created, location: @role
         else
           render jsonapi_errors: @role.errors, status: :unprocessable_entity
         end
@@ -30,7 +30,7 @@ module Api
       # PATCH/PUT /roles/1
       def update
         if @role.update(role_params)
-          render jsonapi: @role, class: { Question: SerializableQuestion, User: SerializableUser, Role: SerializableRole, Answer: SerializableAnswer}, include: 'user'
+          render jsonapi: @role, class: { User: SerializableUser, Role: SerializableRole }, include: 'user'
         else
           render jsonapi_errors: @role.errors, status: :unprocessable_entity
         end
