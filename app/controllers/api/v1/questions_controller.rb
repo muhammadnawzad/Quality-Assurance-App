@@ -1,23 +1,23 @@
 module Api
   module V1
-    class QuestionsController < ApplicationController
-      before_action :current_user
+    class QuestionsController < GuardController
       before_action :set_question, only: %i[ show update destroy ]
 
       # GET /questions
       def index
-        @questions = Question.all
-
+        @questions = Question.all.accessible_by(current_ability, :list)
         render json: @questions
       end
 
       # GET /questions/1
       def show
+        authorize! :read, @question
         render json: @question
       end
 
       # POST /questions
       def create
+        authorize! :create, Question
         @question = current_user.questions.build(question_params)
 
         if @question.save
@@ -29,6 +29,7 @@ module Api
 
       # PATCH/PUT /questions/1
       def update
+        authorize! :update, @question
         if @question.update(question_params)
           render json: @question
         else
@@ -38,6 +39,7 @@ module Api
 
       # DELETE /questions/1
       def destroy
+        authorize! :manage, @question
         @question.destroy
       end
 

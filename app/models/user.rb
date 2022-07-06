@@ -6,4 +6,9 @@ class User < ApplicationRecord
   has_many :roles
   has_many :questions
   has_many :answers
+
+  def has_role?(role_name)
+    roles.any? { |role| role.name == role_name }
+  end
+
 end
