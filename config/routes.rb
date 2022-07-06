@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       resources :roles
       resources :tokens
       resources :questions
+      resources :answers
     end
   end
 end
