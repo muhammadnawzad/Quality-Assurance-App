@@ -15,7 +15,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_06_103223) do
   enable_extension "plpgsql"
 
   create_table "answers", force: :cascade do |t|
-    t.string "content"
+    t.string "content", null: false
     t.bigint "user_id", null: false
     t.bigint "question_id", null: false
     t.boolean "is_chosen_as_best_answer"
@@ -26,7 +26,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_06_103223) do
   end
 
   create_table "questions", force: :cascade do |t|
-    t.string "title"
+    t.string "title", null: false
     t.string "content"
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
@@ -35,7 +35,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_06_103223) do
   end
 
   create_table "roles", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
