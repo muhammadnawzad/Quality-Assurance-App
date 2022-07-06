@@ -17,10 +17,10 @@ module Api
 
       # POST /questions
       def create
-        @question = Question.new(question_params)
+        @question = current_user.questions.build(question_params)
 
         if @question.save
-          render json: @question, status: :created, location: @question
+          render json: @question, status: :created
         else
           render json: @question.errors, status: :unprocessable_entity
         end
@@ -48,7 +48,7 @@ module Api
 
         # Only allow a list of trusted parameters through.
         def question_params
-          params.require(:question).permit(:title, :content, :user_id)
+          params.require(:question).permit(:title, :content)
         end
     end
   end
