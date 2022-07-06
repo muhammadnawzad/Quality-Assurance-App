@@ -1,24 +1,31 @@
-# README
+<br />
+<p align="center">
+  <h3 align="center">Quality Assurance App</h3>
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+  <p align="center">QA Engineers will need a way to communicate with software developers when conducting quality assurance processes. This includes asking questions and getting answers from the development team. QA engineers will also need to know what answer is the best answer so that they can use it as a reference for future occurrences.
+  </p>
+</p>
 
-Things you may want to cover:
 
-* Ruby version
+## Used Technologies
 
-* System dependencies
+- Ruby
+- Rails
+- postgresql
+- Docker
 
-* Configuration
+## Instructions and Prerequisites
 
-* Database creation
+- Ruby 3.1.2
 
-* Database initialization
+```
+DATABASE__HOST=localhost
+DATABASE__USERNAME=
+DATABASE__PASSWORD=
+DATABASE__PORT=5432
+DATABASE__NAME=
+```
 
-* How to run the test suite
+## license
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+This project has no licence.
