@@ -36,3 +36,5 @@ gem "bcrypt", "~> 3.1"
 gem "jwt", "~> 2.4"
 
 gem "cancancan", "~> 3.4"
+
+gem "jsonapi-rails", "~> 0.4.1"

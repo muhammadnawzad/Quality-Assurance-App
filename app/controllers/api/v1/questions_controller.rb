@@ -6,13 +6,13 @@ module Api
       # GET /questions
       def index
         @questions = Question.all.accessible_by(current_ability, :list)
-        render json: @questions
+        render jsonapi: @questions, class: { Question: SerializableQuestion, User: SerializableUser, Role: SerializableRole, Answer: SerializableAnswer}, include: ['user', 'answers']
       end
 
       # GET /questions/1
       def show
         authorize! :read, @question
-        render json: @question
+        render jsonapi: @question, class: { Question: SerializableQuestion, User: SerializableUser, Role: SerializableRole, Answer: SerializableAnswer}, include: ['user', 'answers']
       end
 
       # POST /questions
@@ -21,9 +21,9 @@ module Api
         @question = current_user.questions.build(question_params)
 
         if @question.save
-          render json: @question, status: :created
+          render jsonapi: @question, class: { Question: SerializableQuestion, User: SerializableUser, Role: SerializableRole, Answer: SerializableAnswer}, include: ['user', 'answers'], status: :created
         else
-          render json: @question.errors, status: :unprocessable_entity
+          render jsonapi_errors: @question.errors, status: :unprocessable_entity
         end
       end
 
@@ -31,9 +31,9 @@ module Api
       def update
         authorize! :update, @question
         if @question.update(question_params)
-          render json: @question
+          render json: @question, class: { Question: SerializableQuestion, User: SerializableUser, Role: SerializableRole, Answer: SerializableAnswer}, include: ['user', 'answers']
         else
-          render json: @question.errors, status: :unprocessable_entity
+          render jsonapi_errors: @question.errors, status: :unprocessable_entity
         end
       end
 

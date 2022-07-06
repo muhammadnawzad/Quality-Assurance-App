@@ -6,13 +6,13 @@ module Api
       # GET /answers
       def index
         @answers = Answer.all.accessible_by(current_ability, :list)
-        render json: @answers
+        render json: @answers, class: { Question: SerializableQuestion, User: SerializableUser, Role: SerializableRole, Answer: SerializableAnswer}, include: ['user', 'question']
       end
 
       # GET /answers/1
       def show
         authorize! :read, @answer
-        render json: @answer
+        render json: @answer, class: { Question: SerializableQuestion, User: SerializableUser, Role: SerializableRole, Answer: SerializableAnswer}, include: ['user', 'question']
       end
 
       # POST /answers
@@ -21,9 +21,9 @@ module Api
         @answer = current_user.answers.build(answer_params)
 
         if @answer.save
-          render json: @answer, status: :created, location: @answer
+          render jsonapi: @answer, class: { Question: SerializableQuestion, User: SerializableUser, Role: SerializableRole, Answer: SerializableAnswer}, include: ['user', 'question'], status: :created, location: @answer
         else
-          render json: @answer.errors, status: :unprocessable_entity
+          render jsonapi_errors: @answer.errors, status: :unprocessable_entity
         end
       end
 
@@ -31,9 +31,9 @@ module Api
       def update
         authorize! :update, @answer
         if @answer.update(answer_params)
-          render json: @answer
+          render jsonapi: @answer, class: { Question: SerializableQuestion, User: SerializableUser, Role: SerializableRole, Answer: SerializableAnswer}, include: ['user', 'question']
         else
-          render json: @answer.errors, status: :unprocessable_entity
+          render jsonapi_errors: @answer.errors, status: :unprocessable_entity
         end
       end
 
@@ -48,9 +48,9 @@ module Api
         @answer.choose_the_best
 
         if @answer.save
-          render json: @answer.question
+          render jsonapi: @answer.question, , class: { Question: SerializableQuestion, User: SerializableUser, Role: SerializableRole, Answer: SerializableAnswer}, include: ['user', 'answers']
         else
-          render json: @answer.errors, status: :unprocessable_entity
+          render jsonapi_errors: @answer.errors, status: :unprocessable_entity
         end
       end
 
