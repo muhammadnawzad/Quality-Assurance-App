@@ -2,6 +2,7 @@ module Api
   module V1
     class UsersController < ApplicationController
       before_action :set_user, only: %i[ show update destroy ]
+      before_action :check_owner, only: %i[ update destroy ]
 
       # GET /users
       def index
@@ -50,12 +51,12 @@ module Api
         def user_params
           params.require(:user).permit(:email, :password_digest)
         end
+
+        # Check if the user is the owner of the user
+        def check_owner
+          head :forbidden unless @user.id == current_user&.id
+        end
+
     end
-  end
-end
-
-module Api
-  module V1
-
   end
 end
