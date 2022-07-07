@@ -51,6 +51,15 @@ module Api
         @user.destroy
       end
 
+      def login
+        @user = User.find_by_email(user_params[:email])
+        if @user&.authenticate(user_params[:password])
+          render json: {token: JsonWebToken.encode(user_id: @user.id), email: @user.email}
+        else
+          head :unauthorized
+        end
+      end
+
       private
         # Use callbacks to share common setup or constraints between actions.
         def set_user
@@ -59,7 +68,7 @@ module Api
 
         # Only allow a list of trusted parameters through.
         def user_params
-          params.require(:user).permit(:email, :password_digest)
+          params.require(:user).permit(:email, :password_digest, :password)
         end
 
         # Check if the user is the owner of the user

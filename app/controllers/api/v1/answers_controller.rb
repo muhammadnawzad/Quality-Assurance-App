@@ -1,6 +1,6 @@
 module Api
   module V1
-    class AnswersController < ApplicationController
+    class AnswersController < GuardController
       before_action :set_answer, only: %i[ show update destroy choose_the_best_answer ]
 
       # GET /answers
@@ -49,8 +49,8 @@ module Api
       end
 
       def choose_the_best_answer
-        authorize! :choose_the_best, @answer.question
-        @answer.choose_the_best
+        authorize! :choose_the_best_answer, @answer.question
+        @answer.choose_the_best_answer
 
         if @answer.save
           render jsonapi: @answer.question,

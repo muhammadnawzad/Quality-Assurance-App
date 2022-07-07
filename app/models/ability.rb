@@ -10,7 +10,7 @@ class Ability
 
     if user.has_role?("QA-Engineer")
       can :create, Question
-      can %i[update delete choose_the_best], Question do |question|
+      can %i[update delete choose_the_best_answer], Question do |question|
         question.user_id == user.id
       end
     end

@@ -9,7 +9,7 @@ class User < ApplicationRecord
   has_many :answers
 
   def has_role?(role_name)
-    roles.any? { |role| role.name == role_name }
+    role.name == role_name
   end
 
 end

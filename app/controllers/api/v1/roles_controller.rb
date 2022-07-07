@@ -1,6 +1,6 @@
 module Api
   module V1
-    class RolesController < ApplicationController
+    class RolesController < GuardController
       before_action :set_role, only: %i[ show update destroy ]
 
       # GET /roles
