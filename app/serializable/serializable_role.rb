@@ -2,5 +2,5 @@ class SerializableRole < JSONAPI::Serializable::Resource
   type 'roles'
   attribute :name
 
-  belongs_to :user, serializer: SerializableUser
+  has_many :users, serializer: SerializableUser
 end

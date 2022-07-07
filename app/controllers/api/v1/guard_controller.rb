@@ -6,7 +6,6 @@ module Api
       def set_ability
         @ability = Ability.new(current_user)
       end
-
     end
   end
 end

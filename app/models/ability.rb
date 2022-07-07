@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class Ability
   include CanCan::Ability
 
@@ -12,14 +10,14 @@ class Ability
 
     if user.has_role?("QA-Engineer")
       can :create, Question
-      can %i[update, delete choose_the_best], Question do |question|
+      can %i[update delete choose_the_best], Question do |question|
         question.user_id == user.id
       end
     end
 
     if user.has_role?("SW-Engineer")
       can :create, Answer
-      can %i[update, delete], Answer do |answer|
+      can %i[update delete], Answer do |answer|
         answer.user_id == user.id
       end
     end

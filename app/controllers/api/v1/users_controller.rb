@@ -6,15 +6,20 @@ module Api
 
       # GET /users
       def index
-        @users = User.all
-        render jsonapi: @users, class: { Question: SerializableQuestion, User: SerializableUser, Role: SerializableRole, Answer: SerializableAnswer}, include: ['roles', 'questions', 'answers']
+        @users = User.all.includes(:role, {questions: :answers}, :answers)
+        render jsonapi: @users,
+               class: { Question: SerializableQuestion, User: SerializableUser, Role: SerializableRole, Answer: SerializableAnswer},
+               include: ['role', {questions: [:answers]}, {role: :users}, 'answers']
       end
+
 
 
       # GET /users/1
       def show
         #render json: @user
-        render jsonapi: @user, class: { Question: SerializableQuestion, User: SerializableUser, Role: SerializableRole, Answer: SerializableAnswer}, include: ['roles', 'questions', 'answers']
+        render jsonapi: @user,
+               class: { Question: SerializableQuestion, User: SerializableUser, Role: SerializableRole, Answer: SerializableAnswer},
+               include: ['role', {questions: [:answers]}, {role: :users}, 'answers']
       end
 
       # POST /users
@@ -22,7 +27,9 @@ module Api
         @user = User.new(user_params)
 
         if @user.save
-          render jsonapi: @user, class: { Question: SerializableQuestion, User: SerializableUser, Role: SerializableRole, Answer: SerializableAnswer}, include: ['roles', 'questions', 'answers'], status: :created, location: @user
+          render jsonapi: @user, status: :created,
+                 class: { Question: SerializableQuestion, User: SerializableUser, Role: SerializableRole, Answer: SerializableAnswer},
+                 include: ['role', {questions: [:answers]}, {role: :users}, 'answers']
         else
           render jsonapi_errors: @user.errors, status: :unprocessable_entity
         end
@@ -31,7 +38,9 @@ module Api
       # PATCH/PUT /users/1
       def update
         if @user.update(user_params)
-          render jsonapi: @user, class: { Question: SerializableQuestion, User: SerializableUser, Role: SerializableRole, Answer: SerializableAnswer}, include: ['roles', 'questions', 'answers']
+          render jsonapi: @user,
+                 class: { Question: SerializableQuestion, User: SerializableUser, Role: SerializableRole, Answer: SerializableAnswer},
+                 include: ['role', {questions: [:answers]}, {role: :users}, 'answers']
         else
           render jsonapi_errors: @user.errors, status: :unprocessable_entity
         end
